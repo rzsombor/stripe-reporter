@@ -35,7 +35,7 @@ def write_invoices_to_file(invoices, file_path):
 
     with open(file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Invoice ID', 'Created', 'Due Date', 'Paid At', 'Amount Paid', 'Currency', 'Payment Status'])
+        writer.writerow(['Invoice ID', 'Created', 'Due Date', 'Paid At', 'Amount Paid', 'Amount Due', 'Currency', 'Payment Status'])
 
         for invoice in invoices:
             writer.writerow([
@@ -44,6 +44,7 @@ def write_invoices_to_file(invoices, file_path):
                 datetime.fromtimestamp(invoice.due_date).isoformat() if invoice.due_date else '',
                 datetime.fromtimestamp(invoice.status_transitions.paid_at).isoformat() if invoice.status_transitions.paid_at else '',
                 invoice.amount_paid / 100,
+                invoice.amount_due / 100,
                 invoice.currency,
                 invoice.status
             ])
